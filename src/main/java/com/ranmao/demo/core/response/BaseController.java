@@ -27,10 +27,45 @@ public class BaseController {
         }
         return result;
     }
+
     public <T> Result<T> success() {
-        return message(0,"请求成功！",null);
+        return message(0, "请求成功！", null);
     }
-    public <T> Result<T> success(String message,T data) {
-        return message(CODE_SUCCESS,message,data);
+
+    public <T> Result<T> success(String message, T data) {
+        return message(CODE_SUCCESS, message, data);
+    }
+
+    public <T> Result<T> suuccess(T data) {
+        return message(CODE_SUCCESS, MSG_SUCCESS, data);
+    }
+
+    public <T> Result<T> failure(int code, String message, T data) {
+        return message(code, message, data);
+    }
+
+    public <T> Result<T> failure(String message, T data) {
+        return message(CODE_FAILURE, message, data);
+    }
+
+    public <T> Result<T> failure(String message) {
+        return message(CODE_FAILURE, message, null);
+    }
+
+    public <T> Result<T> failure(T data) {
+        return message(CODE_FAILURE, MSG_FAILURE, data);
+    }
+
+    public <T> Result<T> failure() {
+        return message(CODE_FAILURE, MSG_FAILURE, null);
+    }
+
+    protected <T> Result<T> failure(ResultEnum error, T data) {
+        return message(error.getCode(), error.getMessage(), data);
+    }
+
+    protected <T> Result<T> failure(ServiceException ex) {
+        Result<T> result = message(ex.getCode(), ex.getMessage(), null);
+        return result;
     }
 }
